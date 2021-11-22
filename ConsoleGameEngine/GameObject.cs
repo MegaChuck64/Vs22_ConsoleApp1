@@ -2,6 +2,7 @@
 
 public abstract class GameObject
 {
+    //todo: is this really necessary
     public Guid Guid { get; }
     public ConsoleGame Game { get; }
     public GameObject(ConsoleGame game)
@@ -9,7 +10,6 @@ public abstract class GameObject
         Game = game;
         Guid = Guid.NewGuid();
     }
-
     public virtual void Start() { }
     public virtual void Update(float dt) { }
     public virtual void Draw() { }

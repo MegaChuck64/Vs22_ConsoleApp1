@@ -9,5 +9,13 @@ public class Game : ConsoleGame
         GameObjects.Add(new Map(this));
         GameObjects.Add(new Player(this));
     }
+
+    public override void Update(float delta)
+    {
+        if (Input.PressedKeys[Input.Keys.Esc] && Input.PressedKeys[Input.Keys.End])
+            State = GameState.Exiting;
+
+        base.Update(delta);
+    }
 }
 

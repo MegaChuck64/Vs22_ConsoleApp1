@@ -3,7 +3,7 @@ namespace Vs22_ConsoleApp1.GameObjects;
 public class Player : GameObject
 {
     ConsoleChar C;
-    float speed = 16f;
+    float speed = 10f;
     public Player(Game game) : base(game)
     {
         C.X = game.Width / 2;

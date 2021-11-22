@@ -1,5 +1,8 @@
 ﻿namespace ConsoleGameEngine;
 
+//we use this input class using win32 key events because
+//default console.readkey is not consistent. delay between first and second fire
+//like in notepad.exe or similar prgrams 
 public static class Input
 {
     [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -17,8 +20,9 @@ public static class Input
     public static void Update()
     {
         foreach (var key in PressedKeys.Keys)
-        {
-            //0x8000 = int minimum
+        {            
+            //0x8000 most significant bit
+            //if MSB is set, key is down
             PressedKeys[key] = (0x8000 & GetAsyncKeyState((char)key)) != 0;
         }
     }
@@ -30,6 +34,8 @@ public static class Input
         Up = 0x26,
         Right = 0x27,
         Down = 0x28,
+        Esc = 0x1B,
+        End = 0x23
     }
 }
 
