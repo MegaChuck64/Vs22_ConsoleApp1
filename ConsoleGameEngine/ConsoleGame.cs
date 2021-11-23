@@ -1,13 +1,14 @@
 ﻿namespace ConsoleGameEngine;
 
-public abstract class ConsoleGame
+public abstract class ConsoleGame : IComponent
 {
     public int Width { get; }
     public int Height { get; }
-
-    public List<GameObject> GameObjects = new();
     public GameState State { get; set; }
     public Random Rand { get; set; }
+
+    public SceneManager SceneManager;
+
 
     public ConsoleGame(int w, int h)
     {
@@ -16,6 +17,7 @@ public abstract class ConsoleGame
         Console.SetWindowSize(w, h);
         Console.SetBufferSize(w, h);
         Console.CursorVisible = false;
+        SceneManager = new SceneManager(this);
 
         Rand = new Random();
     }
@@ -27,7 +29,10 @@ public abstract class ConsoleGame
 
         FastConsole.Init(Width, Height);
         Input.Init();
+       
         Start();
+        SceneManager.Start();
+
         DateTime lastGameTime = DateTime.Now;
         State = GameState.Running;
         while (State == GameState.Running)
@@ -43,38 +48,22 @@ public abstract class ConsoleGame
             Input.Update();
 
             //dt (delta time), time between frames. Allows movement by units per second instead of per frame
-            Update((float)(GameTime.TotalMilliseconds / 1000));
+            var dt = (float)(GameTime.TotalMilliseconds / 1000);
+            Update(dt);
+            SceneManager.Update(dt);
 
             //draws to fast console buffer
             Draw();
+            SceneManager.Draw();
 
             //constant frame rate, still calculating dt above, because thread sleep aint perfect 
             Thread.Sleep((int)(1000 / fps));
         }
     }
 
-
-    public virtual void Start()
-    {
-        foreach (var go in GameObjects)
-        {
-            go.Start();
-        }
-    }
-    public virtual void Update(float delta)
-    {
-        foreach (var go in GameObjects)
-        {
-            go.Update(delta);
-        }
-    }
-    public virtual void Draw()
-    {
-        foreach (var go in GameObjects)
-        {
-            go.Draw();
-        }
-    }
+    public abstract void Start();
+    public abstract void Update(float delta);
+    public abstract void Draw();
 
     public enum GameState
     {

@@ -3,16 +3,16 @@ namespace Vs22_ConsoleApp1.GameObjects;
 public class Map : GameObject
 {
     public ConsoleChar[,] charMap;
-    public Map(Game game) : base(game)
+    public Map(Scene scene) : base(scene)
     {
-        var noiseMap = NoiseMap.Generate(game.Width, game.Height, 0.1f);
-        charMap = new ConsoleChar[game.Width, game.Height];
-        for (int x = 0; x < game.Width; x++)
+        var noiseMap = NoiseMap.Generate(scene.Game.Width, scene.Game.Height, 0.1f);
+        charMap = new ConsoleChar[scene.Game.Width, scene.Game.Height];
+        for (int x = 0; x < scene.Game.Width; x++)
         {
-            for (int y = 0; y < game.Height; y++)
-            {
+            for (int y = 0; y < scene.Game.Height; y++)
+            { 
                 var dist = DistFromCenter(x, y);
-                var gradient = Remap(dist, 0f, 1f, 1f, 0f);
+                var gradient = RemapRange(dist, 0f, 1f, 1f, 0f);
                 var height = noiseMap[x, y] * gradient;
 
                 (char c, ConsoleColor col) = height switch
@@ -25,7 +25,6 @@ public class Map : GameObject
                     _                   => ('╋', ConsoleColor.DarkBlue),
                 };
 
-                var randCol = game.Rand.Next(1, 16);
                 charMap[x, y] = new ConsoleChar
                 {
                     C = c,
@@ -50,17 +49,16 @@ public class Map : GameObject
 
     private float DistFromCenter(float x, float y)
     {
-        var center = (Game.Width / 2, Game.Height / 2);
-        float distance = MathF.Sqrt(
-            (center.Item1 - x) * (center.Item1 - x) + (center.Item2 - y) * (center.Item2 - y));
-        return distance / Game.Width;
+        var center = (Scene.Game.Width / 2, Scene.Game.Height / 2);
+        float distance = (float)GetDistance(x, y, center.Item1, center.Item2);            
+        return distance / Scene.Game.Width;
     }
     private static double GetDistance(double x1, double y1, double x2, double y2)
     {
         return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
     }
 
-    public static float Remap(float value, float from1, float to1, float from2, float to2)
+    public static float RemapRange(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }

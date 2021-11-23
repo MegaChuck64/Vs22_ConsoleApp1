@@ -1,14 +1,11 @@
 ﻿namespace ConsoleGameEngine;
 
-public abstract class GameObject
+public abstract class GameObject : IComponent
 {
-    //todo: is this really necessary
-    public Guid Guid { get; }
-    public ConsoleGame Game { get; }
-    public GameObject(ConsoleGame game)
+    public Scene Scene { get; }
+    public GameObject(Scene scene)
     {
-        Game = game;
-        Guid = Guid.NewGuid();
+        Scene = scene;
     }
     public virtual void Start() { }
     public virtual void Update(float dt) { }
