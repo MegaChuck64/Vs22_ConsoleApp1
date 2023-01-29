@@ -98,36 +98,29 @@ public static class FastConsole
         OutputHandle = -11
     }
 
-    private enum CharInfoAttribute : ushort
-    {
-        FOREGROUND_BLUE             = 0x0001,
-        FOREGROUND_GREEN            = 0x0002,
-        FOREGROUND_RED              = 0x0004,
-        FOREGROUND_INTENSITY        = 0x0008,
-        BACKGROUND_BLUE             = 0x0010,
-        BACKGROUND_GREEN            = 0x0020,
-        BACKGROUND_RED              = 0x0040,
-        BACKGROUND_INTENSITY        = 0x0080,
-        COMMON_LVB_REVERSE_VIDEO    = 0x4000,
-        COMMON_LVB_UNDERSCORE       = 0x8000,
-    }
-
-
-
-
-
-
-
-
-
 
     //warnings, no constructor
     //todo: maybe this shouldn't be static
     private static SafeFileHandle bufferFile;
     private static CharInfo[] charBuffer;
-    private static SmallRect drawRect;
-    public static void Init(int w, int h)
+    public static SmallRect drawRect;
+    public static void Init(int w, int h, string font = "Consolas", int fw = 14, int fh = 14)
     {
+        SetConsoleFont(font, (short)fw, (short)fh);
+        try
+        {
+            Console.SetWindowSize(w, h);
+            Console.SetBufferSize(w, h);
+        }
+        catch
+        {
+            var size = GetLargestSquareWindowSize();
+            Console.SetWindowSize(size, size);
+            Console.SetBufferSize(size, size);
+            w = size;
+            h = size;
+        }
+
         bufferFile = CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
         charBuffer = new CharInfo[w * h];
         for (int i = 0; i < charBuffer.Length; i++)
@@ -140,7 +133,6 @@ public static class FastConsole
         }
         drawRect = new SmallRect { Left = 0, Top = 0, Right = (short)w, Bottom = (short)h };
         Console.OutputEncoding = System.Text.Encoding.Unicode;
-        SetConsoleFont();
     }
 
     public static void WriteToBuffer(int x, int y, char c, ConsoleColor color, ConsoleColor bgColor = ConsoleColor.Black)
@@ -151,7 +143,10 @@ public static class FastConsole
             charBuffer[i].Attributes = (ushort)((ushort)color | ((ushort)bgColor << 4));
             charBuffer[i].Char.UnicodeChar = c;
         }
-        catch { }
+        catch(Exception e)
+        {
+        
+        }
     }
 
     public static void Draw()
@@ -189,7 +184,14 @@ public static class FastConsole
         // GetCurrentConsoleFontEx(GetStdHandle(StdHandle.OutputHandle), false, ref ConsoleFontInfo);
     }
 
+    public static int GetLargestSquareWindowSize()
+    {
+        var largestW = Console.LargestWindowWidth;
+        var largestH = Console.LargestWindowHeight;
 
+        if (largestW < largestH) return largestW;
+        else return largestH;
+    }
 
     public static ConsoleColor ClosestConsoleColor(byte r, byte g, byte b)
     {

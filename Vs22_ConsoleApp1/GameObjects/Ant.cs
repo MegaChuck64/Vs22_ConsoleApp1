@@ -8,7 +8,12 @@ public class Ant : GameObject
     public ConsoleChar[,] map;
     public Ant(Scene scene) : base(scene)
     {
-        map = new ConsoleChar[scene.Game.Width, scene.Game.Height];
+
+    }
+
+    public override void Start()
+    {
+        map = new ConsoleChar[Scene.Game.Width, Scene.Game.Height];
         for (int x = 0; x < map.GetLength(0); x++)
         {
             for (int y = 0; y < map.GetLength(1); y++)
@@ -24,10 +29,11 @@ public class Ant : GameObject
             }
         }
 
-        walkers.Add(new Walker { x = scene.Game.Width/2, y = scene.Game.Height/2, steps = 1000 });
+        walkers.Add(new Walker { x = Scene.Game.Width / 2, y = Scene.Game.Height / 2, steps = 20_000 });
+
     }
 
-    float stepsPerSecond = 25f;
+    float stepsPerSecond = 100f;
     float timer = 1f;
     public override void Update(float dt)
     {
@@ -47,18 +53,25 @@ public class Ant : GameObject
 
     public override void Draw()
     {
-        for (int x = 0; x < map.GetLength(0); x++)
+        try
         {
-
-            for (int y = 0; y < map.GetLength(1); y++)
+            for (int x = 0; x < map.GetLength(0); x++)
             {
-                map[x, y].Draw();
+
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    map[x, y].Draw();
+                }
+            }
+
+            foreach (var walker in walkers)
+            {
+                FastConsole.WriteToBuffer(walker.x, walker.y, '@', ConsoleColor.Yellow);
             }
         }
-
-        foreach (var walker in walkers)
+        catch(Exception e)
         {
-            FastConsole.WriteToBuffer(walker.x, walker.y, '@', ConsoleColor.Yellow);
+
         }
     }
 }

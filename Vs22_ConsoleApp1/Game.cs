@@ -7,18 +7,20 @@ public class Game : ConsoleGame
     public Game(int w, int h) : base(w, h)
     {
         SceneManager.Components.Add("Test", new TestScene(this));
+        SceneManager.Components.Add("Ant", new AntScene(this));
         SceneManager.Components.Add("Map", new MapScene(this));
+        SceneManager.Components.Add("Menu", new MenuScene(this));
     }
 
 
     public override void Start()
     {
-        SceneManager.CurrentSscene = "Test";
+        SceneManager.CurrentSscene = "Menu";
     }
 
     public override void Update(float delta)
     {
-        if (Input.PressedKeys[Input.Keys.Esc] && Input.PressedKeys[Input.Keys.End])
+        if (Input.PressedKeys[ConsoleKey.Escape] && Input.PressedKeys[ConsoleKey.End])
             State = GameState.Exiting;
 
     }

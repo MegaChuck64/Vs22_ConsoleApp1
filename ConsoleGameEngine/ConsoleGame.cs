@@ -2,8 +2,8 @@
 
 public abstract class ConsoleGame : IComponent
 {
-    public int Width { get; }
-    public int Height { get; }
+    public int Width { get; private set; }
+    public int Height { get; private set; }
     public GameState State { get; set; }
     public Random Rand { get; set; }
 
@@ -14,20 +14,20 @@ public abstract class ConsoleGame : IComponent
     {
         Width = w;
         Height = h;
-        Console.SetWindowSize(w, h);
-        Console.SetBufferSize(w, h);
         Console.CursorVisible = false;
         SceneManager = new SceneManager(this);
 
         Rand = new Random();
     }
 
-    public void Run(float fps)
+    public void Run(float fps, string font = "Consolas", int fw = 14, int fh = 14)
     {
         if (State != GameState.Starting) return;
 
 
-        FastConsole.Init(Width, Height);
+        FastConsole.Init(Width, Height, font, fw, fh);
+        Width = FastConsole.drawRect.Right;
+        Height = FastConsole.drawRect.Bottom;
         Input.Init();
        
         Start();

@@ -7,6 +7,6 @@ public class TestScene : Scene
 {
     public TestScene(ConsoleGame game) : base(game)
     {
-        Components.Add("Ant", new Ant(this));
+        Components.Add("Sprite", new SpriteTest(this, "TestSprite.png"));
     }
 }

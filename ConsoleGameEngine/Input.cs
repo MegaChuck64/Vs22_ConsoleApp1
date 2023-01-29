@@ -8,11 +8,11 @@ public static class Input
     [System.Runtime.InteropServices.DllImport("user32.dll")]
     static extern short GetAsyncKeyState(int key);
 
-    public static Dictionary<Keys, bool> PressedKeys = new();
+    public static Dictionary<ConsoleKey, bool> PressedKeys = new();
 
     public static void Init()
     {
-        foreach (var key in Enum.GetValues<Keys>())
+        foreach (var key in Enum.GetValues<ConsoleKey>())
         {
             PressedKeys.Add(key, false);
         }
@@ -27,15 +27,17 @@ public static class Input
         }
     }
 
-    //https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-    public enum Keys : short
-    {
-        Left = 0x25,
-        Up = 0x26,
-        Right = 0x27,
-        Down = 0x28,
-        Esc = 0x1B,
-        End = 0x23
-    }
+    ////https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+    //public enum Keys : short
+    //{
+    //    Left = 0x25,
+    //    Up = 0x26,
+    //    Right = 0x27,
+    //    Down = 0x28,
+    //    Esc = 0x1B,
+    //    End = 0x23,
+    //    Space = 0x20,
+    //    Enter = 0x0D
+    //}
 }
 

@@ -25,4 +25,10 @@ public class SceneManager : ComponentCollection<Scene>
         Components[CurrentSscene].Draw();
     }
 
+    public void ChangeScene(string name)
+    {
+        CurrentSscene = name;
+        Start();
+    }
+
 }

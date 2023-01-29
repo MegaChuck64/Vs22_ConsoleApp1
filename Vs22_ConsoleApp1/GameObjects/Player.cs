@@ -22,16 +22,16 @@ public class Player : GameObject
         var keys = Input.PressedKeys;
         var (X, Y) = (C.X, C.Y);
 
-        if (keys[Input.Keys.Left])
+        if (keys[ConsoleKey.LeftArrow])
             if (X > 0)
                 X -= speed * dt;
-        if (keys[Input.Keys.Right])
+        if (keys[ConsoleKey.RightArrow])
             if (X < Scene.Game.Width - 1)
                 X+= speed * dt;
-        if (keys[Input.Keys.Up])
+        if (keys[ConsoleKey.UpArrow])
             if (Y > 0)
                 Y-= speed * dt;
-        if (keys[Input.Keys.Down])
+        if (keys[ConsoleKey.DownArrow])
             if (Y < Scene.Game.Height - 1)
                 Y+= speed * dt;
 

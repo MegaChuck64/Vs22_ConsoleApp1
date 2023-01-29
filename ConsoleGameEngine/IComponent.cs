@@ -26,9 +26,16 @@ public class ComponentCollection<T> : IComponent where T : IComponent
     }
     public virtual void Draw()
     {
-        foreach (var comp in Components.Values)
+        try
         {
-            comp.Draw();
+            foreach (var comp in Components.Values)
+            {
+                comp.Draw();
+            }
+        }
+        catch(Exception e)
+        {
+
         }
     }
 
