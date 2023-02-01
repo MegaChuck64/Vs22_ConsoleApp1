@@ -16,7 +16,7 @@ public class Player : GameObject
         C.C = '@';
 
     }
-
+    //bool done = false;
     public override void Update(float dt)
     {
         var keys = Input.PressedKeys;
@@ -45,6 +45,14 @@ public class Player : GameObject
             C.Y = Y;
         }
 
+        //if (!done && keys[ConsoleKey.C])
+        //{            
+        //    map.offsetX += (int)C.X;
+        //    map.offsetY += (int)C.Y;
+
+        //    map.UpdateMap();
+        //    done = true;
+        //}
     }
 
     public override void Draw()

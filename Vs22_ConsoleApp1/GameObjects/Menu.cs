@@ -24,8 +24,8 @@ public class Menu : GameObject
         titleString.BGColor = new ConsoleColor[titleString.Text.Length];
         for (int i = 0; i < titleString.Text.Length; i++)
         {
-            var rc = Scene.Game.Rand.Next(7, 16);
-            var rb = Scene.Game.Rand.Next(7, 16);
+            var rc = 0;// Scene.Game.Rand.Next(7, 16);
+            var rb = 7; //Scene.Game.Rand.Next(7, 16);
             if (rc == rb) rc = 15;
             titleString.Color[i] = (ConsoleColor)rc;
             titleString.BGColor[i] = (ConsoleColor)rb;
@@ -43,8 +43,8 @@ public class Menu : GameObject
         mapSceneString.BGColor = new ConsoleColor[mapSceneString.Text.Length];
         for (int i = 0; i < mapSceneString.Text.Length; i++)
         {
-            var rc = Scene.Game.Rand.Next(7, 16);
-            var rb = Scene.Game.Rand.Next(7, 16);
+            var rc = 0;// Scene.Game.Rand.Next(7, 16);
+            var rb = 7; //Scene.Game.Rand.Next(7, 16);
             if (rc == rb) rc = 15;
             mapSceneString.Color[i] = (ConsoleColor)rc;
             mapSceneString.BGColor[i] = (ConsoleColor)rb;
@@ -63,8 +63,8 @@ public class Menu : GameObject
         antSceneString.BGColor = new ConsoleColor[antSceneString.Text.Length];
         for (int i = 0; i < antSceneString.Text.Length; i++)
         {
-            var rc = Scene.Game.Rand.Next(7, 16);
-            var rb = Scene.Game.Rand.Next(7, 16);
+            var rc = 0;// Scene.Game.Rand.Next(7, 16);
+            var rb = 7; //Scene.Game.Rand.Next(7, 16);
             if (rc == rb) rc = 15;
             antSceneString.Color[i] = (ConsoleColor)rc;
             antSceneString.BGColor[i] = (ConsoleColor)rb;
@@ -82,8 +82,8 @@ public class Menu : GameObject
         testSceneString.BGColor = new ConsoleColor[testSceneString.Text.Length];
         for (int i = 0; i < testSceneString.Text.Length; i++)
         {
-            var rc = Scene.Game.Rand.Next(7, 16);
-            var rb = Scene.Game.Rand.Next(7, 16);
+            var rc = 0;// Scene.Game.Rand.Next(7, 16);
+            var rb = 7; //Scene.Game.Rand.Next(7, 16);
             if (rc == rb) rc = 15;
             testSceneString.Color[i] = (ConsoleColor)rc;
             testSceneString.BGColor[i] = (ConsoleColor)rb;
